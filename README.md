@@ -10,6 +10,9 @@ This shader is the equivalent of the NVIDIA "RTX Dynamic Vibrance" new feature b
 The shader is fully commented and configurable, there's should no need for further explanation, in case, just ask.
 Click on the file .fx and then click on download button on the right or copy paste the code into a .txt and rename it to .fx
 
+ReShade forum link for discussion : 
+https://reshade.me/forum/shader-presentation/9475-smart-vibrance-shader-shader-version-of-rtx-dynamic-vibrance
+
 
 
 
