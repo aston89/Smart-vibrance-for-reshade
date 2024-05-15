@@ -13,6 +13,9 @@ Click on the file .fx and then click on download button on the right or copy pas
 ReShade forum link for discussion : 
 https://reshade.me/forum/shader-presentation/9475-smart-vibrance-shader-shader-version-of-rtx-dynamic-vibrance
 
+Preview : 
+![alt text](https://github.com/aston89/Smart-vibrance-for-reshade/blob/main/reshade_smart_vibrance.jpg?raw=true)
+
 
 
 
