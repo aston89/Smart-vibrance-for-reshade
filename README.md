@@ -18,7 +18,7 @@ V2 RELEASE UPDATE :
 . boost amount, rolloff threshold and grayscale detection threshold are now configurable in the UI of reshade.
 
 Preview : 
-![alt text](https://github.com/aston89/Smart-vibrance-for-reshade/blob/main/reshade_smart_vibrance.jpg?raw=true)
+![alt text](https://github.com/aston89/Smart-vibrance-for-reshade/blob/main/preview.jpg?raw=true)
 
 
 
