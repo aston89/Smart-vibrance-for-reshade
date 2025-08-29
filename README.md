@@ -13,7 +13,7 @@ Click on the file .fx and then click on download button on the right or copy pas
 ReShade forum link for discussion : 
 https://reshade.me/forum/shader-presentation/9475-smart-vibrance-shader-shader-version-of-rtx-dynamic-vibrance
 
-V2 RELEASE UPDATE :
+update notes :
 . changed the way the grayscale is detected, now it doesnt simply switch from on to off but gragually decrease the boost factor the more the pixel is near the grayscale, you can select the threshold in the gui.
 . boost amount, rolloff threshold and grayscale detection threshold are now configurable in the UI of reshade.
 
