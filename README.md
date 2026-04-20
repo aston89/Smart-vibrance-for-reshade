@@ -1,27 +1,130 @@
-*Smart vibrance shader*
+# Smart Vibrance Shader (ReShade)
+A real-time adaptive vibrance shader for games that imitates NVIDIA RTX Dynamic Vibrance witouth needing an nvidia gpu. Not a simple saturation filter. Not a global “digital vibrance” boost.
+This shader selectively enhances color **based on what is already present in each pixel**, avoiding the typical overprocessed look.
 
-This reshade shader is designed to enhance the vibrance of an image selectively, it works in this way :
-1) Boost the saturation of every color if its below a certain threshold.
-2) If the color have an amount of saturation already over the threshold, it will receive less and lesser boost until nothing will be boosted, this method prevent clipping, burning and glowing.
-3) If the color is literally a grayscale (or near grayscale) the boost will also be decreased to preserve clarity and intelligibility on certain situation were the scene is dark and otherwise details will be lost.
+---
 
-This shader is the equivalent of the NVIDIA "RTX Dynamic Vibrance" new feature but witouth the need of AI cores, the logic behind is extremely similar and the result is almost the same especially if you don't already have other gamma, brightness, contrast and digital filter alterations applied to your game.
+##  Problem
+Most games, especially when played on PC monitors, tend to look:
+- slightly washed-out  
+- inconsistent in saturation across scenes  
+- overly dependent on post-processing or display settings  
 
-The shader is fully commented and configurable, there's should no need for further explanation, in case, just ask.
-Click on the file .fx and then click on download button on the right or copy paste the code into a .txt and rename it to .fx
+Common fixes don’t really solve the problem:
+- **GPU vibrance sliders** boost everything equally, oversaturate already strong colors.
+- **contrast / brightness tweaks** destroy shadow or highlight detail.
+- **post-processing chains** add complexity without fixing the core issue.
 
-ReShade forum link for discussion : 
+---
+
+## Core idea
+Instead of applying a fixed saturation boost:
+- the shader evaluates how “colorful” each pixel already is  
+- applies less and less boost as saturation increases
+
+Meaning:
+- weak colors → boosted  
+- mid-range colors → gently enhanced  
+- strong colors → left untouched  
+
+---
+
+## How it works
+
+### 1. adaptive saturation boost
+Low-saturation pixels receive more enhancement.
+
+### 2. smooth rolloff
+As saturation increases, the boost fades out progressively.
+
+**No hard cutoffs, no abrupt transitions.**
+
+---
+
+### 3. grayscale protection
+Near-neutral pixels are preserved using a smooth response.
+
+This prevents:
+- noise amplification  
+- shadow detail loss  
+- flat areas (e.g. UI, fog, anime shading) breaking apart  
+
+---
+
+## Difference between Base vs PLUS logic
+
+### Base version (Smart_vibrance.fx):
+- threshold-based behavior  
+- simple rolloff using smoothstep  
+- grayscale detection with limited smoothness
+Works well, but can feel slightly “mechanical” in edge cases.
+
+### PLUS version (Smart_vibrance_Plus.fx):
+- fully continuous response (no hard logic switches)  
+- chroma-based analysis (more stable than RGB heuristics)  
+- smoother grayscale transition using sigmoid shaping  
+- more natural interaction with already saturated content  
+Behaves more like a system, less like a filter
+
+**In practice:**
+- colors feel more alive without looking artificial  
+- already vibrant scenes remain stable  
+- dark scenes keep their detail  
+- UI and neutral tones stay clean  
+
+**Works especially well on:**
+- SDR games  
+- older titles with flat color grading  
+- games with heavy compression / post effects  
+
+---
+
+## Important note
+
+This is not a color-accurate tool.
+
+It is designed for:
+> perceptual enhancement during gameplay
+
+Not for:
+- color grading
+- reference accuracy
+- professional pipelines
+
+---
+
+## Usage
+- Drop the `.fx` file into your ReShade shaders folder  
+- Enable it from the ReShade menu  
+- Adjust parameters in real time  
+
+Recommended starting point:
+- Intensity: ~1.5  
+- SatPivot: ~0.5  
+
+---
+
+## Discussion
 https://reshade.me/forum/shader-presentation/9475-smart-vibrance-shader-shader-version-of-rtx-dynamic-vibrance
 
-update notes :
-. changed the way the grayscale is detected, now it doesnt simply switch from on to off but gragually decrease the boost factor the more the pixel is near the grayscale, you can select the threshold in the gui.
-. boost amount, rolloff threshold and grayscale detection threshold are now configurable in the UI of reshade.
+---
 
-Preview : 
+## note:
+
+The PLUS version also change the original threshold-based grayscale logic with a continuous response curve to solve:
+- abrupt transitions  
+- edge artifacts in low-saturation areas  
+and results in a much smoother and more natural image behavior.
+
+---
+
+## ReShade forum link for discussion: 
+https://reshade.me/forum/shader-presentation/9475-smart-vibrance-shader-shader-version-of-rtx-dynamic-vibrance
+
+---
+
+## Preview : 
 ![alt text](https://github.com/aston89/Smart-vibrance-for-reshade/blob/main/preview.jpg?raw=true)
-
-
-
 
 
 
