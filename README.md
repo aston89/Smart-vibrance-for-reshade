@@ -122,11 +122,6 @@ Recommended starting point:
 
 ---
 
-## Discussion
-https://reshade.me/forum/shader-presentation/9475-smart-vibrance-shader-shader-version-of-rtx-dynamic-vibrance
-
----
-
 ## note:
 
 The PLUS version also change the original threshold-based grayscale logic with a continuous response curve to solve:
