@@ -118,16 +118,7 @@ Not for:
 
 Recommended starting point:
 - Intensity: ~1.5  
-- SatPivot: ~0.5  
-
----
-
-## note:
-
-The PLUS version also change the original threshold-based grayscale logic with a continuous response curve to solve:
-- abrupt transitions  
-- edge artifacts in low-saturation areas  
-and results in a much smoother and more natural image behavior.
+- SatPivot: ~0.5
 
 ---
 
