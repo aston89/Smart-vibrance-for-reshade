@@ -51,26 +51,45 @@ This prevents:
 
 ---
 
-## Difference between Base vs PLUS logic
+## Difference between Base vs PLUS vs PRO logic
 
-### Base version (Smart_vibrance.fx):
-- threshold-based behavior  
-- simple rolloff using smoothstep  
-- grayscale detection with limited smoothness
-Works well, but can feel slightly “mechanical” in edge cases.
+### Base version (`Smart_Vibrance.fx`):
+* threshold-based behavior
+* simple rolloff using smoothstep
+* basic grayscale detection
+* straightforward saturation boost with limited adaptive balancing
+* computationally very lightweight
+* Works well, but can feel slightly “mechanical” in edge cases
 
-### PLUS version (Smart_vibrance_Plus.fx):
-- fully continuous response (no hard logic switches)  
-- chroma-based analysis (more stable than RGB heuristics)  
-- smoother grayscale transition using sigmoid shaping  
-- more natural interaction with already saturated content  
-Behaves more like a system, less like a filter
+### PLUS version (`Smart_Vibrance_Plus.fx`):
+* fully continuous response (no hard logic switches)
+* chroma-based analysis instead of simple RGB heuristics
+* smoother grayscale transition using sigmoid shaping
+* more natural interaction with already saturated content
+* better adaptive handling of low- and mid-saturation colors
+* More computationally demanding than Base, while remaining lightweight
+Behaves more like a system, less like a filter.
 
-**In practice:**
-- colors feel more alive without looking artificial  
-- already vibrant scenes remain stable  
-- dark scenes keep their detail  
-- UI and neutral tones stay clean  
+### PRO version (`Smart_Vibrance_PRO.fx`):
+* refactors the boost-balance model itself rather than simply increasing the strength of PLUS
+* uses a continuous opponent-style chroma representation based on two axes:
+  * Red to Green
+  * Yellow to Blue
+* evaluates chromatic direction continuously across the full hue plane
+* assigns different chroma-response budgets to different hue directions
+* smoothly interpolates between those directions instead of using hard hue categories
+* introduces chroma-dependent balancing, so low- and mid-chroma colors are no longer automatically treated as candidates for maximum boost
+* uses a neutral fallback when chroma is too weak for reliable hue-direction estimation
+* preserves the continuous response and adaptive behavior introduced by PLUS
+* allows the chroma response to be shaped independently for Red, Yellow, Green and Blue
+* designed as a general-purpose adaptive vibrance model rather than being tied to a specific type of content
+* computationally more demanding than PLUS, but still lightweight enough for real-time ReShade use
+Behaves less like a saturation filter and more like a **continuous chroma-budget system**.
+
+**In short:**
+* Base : simple and lightweight adaptive vibrance
+* PLUS : smoother, more continuous and more natural adaptive vibrance
+* PRO : hue-aware and chroma-aware boost balancing with finer control over how vibrance is distributed across the image
 
 **Works especially well on:**
 - SDR games  
@@ -80,7 +99,6 @@ Behaves more like a system, less like a filter
 ---
 
 ## Important note
-
 This is not a color-accurate tool.
 
 It is designed for:
